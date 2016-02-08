@@ -1,8 +1,6 @@
 # Front-end Code Day Challenges
 
-> Code challenges for potential new hires
-
-At [Dynamit](http://dynamit.com) everyone goes through "code day" challenges as part of the hiring process. These are the challenges for our front-end developers.
+At [Dynamit](http://dynamit.com), everyone goes through "code day" challenges as part of the hiring process.
 
 ## The Challenges
 
