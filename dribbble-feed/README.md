@@ -34,11 +34,3 @@ Generate an optimized build:
 ```
 $ npm run build
 ```
-
-## Working at Dynamit
-
-Dynamit creates web and mobile applications. We serve our clients as strategists, creatives, and engineers.
-
-Together, we blend the best of both marketing and IT to help our clients tackle some of their toughest business challenges. Where we really shine is in situations where simple, graceful web and mobile experiences can make a big difference in the way our clients do business
-
-Interest in working here? Check out our [careers page](http://dynamit.com/careers/).
