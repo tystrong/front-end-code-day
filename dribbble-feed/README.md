@@ -2,6 +2,8 @@
 
 > A feed of shots from [dribbble.com](http://dribbble.com)
 
+![mockup](mockup-state-1.png)
+
 ## Project Overview
 
 This is a [Dynamit](http://dynamit.com) Code Day challenge. Job candidates are provided this code and a set of requirements (in-person). They have **1h** to bring this code to completion, and then present their work to a group of their future colleagues.
