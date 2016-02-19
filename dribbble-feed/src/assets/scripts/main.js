@@ -27,9 +27,10 @@ const DOM = {
  * @param {object} data Context for template
  * @return {string} Templated HTML
  */
-function templateFeed(data = {}) {
+function templateFeed(data) {
 
 	// import Handlebars template
+	// note: if you update the template, you must recompile to see changes (hit save)
 	const template = require('../../templates/components/feed');
 
 	// template using data; return a string of HTML

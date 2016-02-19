@@ -74,16 +74,16 @@ gulp.task('templates', (done) => {
 const webpackConfig = require('./webpack.config')(config);
 
 gulp.task('scripts', (done) => {
-	webpack(webpackConfig, (error, result) => {
-			if (error) {
-				gutil.log(gutil.colors.red(error));
-			}
-			result = result.toJson();
-			if (result.errors.length) {
-				result.errors.forEach(function (error) {
-					gutil.log(gutil.colors.red(error));
-				});
-			}
+	webpack(webpackConfig, (error, stats) => {
+		if (error) {
+			gutil.log(gutil.colors.red(error));
+		}
+		const statsObj = stats.toJson();
+		if (statsObj.errors.length) {
+			statsObj.errors.forEach((err) => {
+				gutil.log(gutil.colors.red(err));
+			});
+		}
 		done();
 	});
 });
