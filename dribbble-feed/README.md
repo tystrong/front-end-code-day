@@ -1,7 +1,5 @@
 # Dribbble Feed
 
-> A feed of shots from [dribbble.com](http://dribbble.com)
-
 ![mockup](mockup-state-1.png)
 
 ## Project Overview
