@@ -7,7 +7,6 @@ import eslint from 'gulp-eslint';
 import gulp from 'gulp';
 import gulpif from 'gulp-if';
 import gutil from 'gulp-util';
-import imagemin from 'gulp-imagemin';
 import path from 'path';
 import runSequence from 'run-sequence';
 import sass from 'gulp-sass';
@@ -37,11 +36,6 @@ const config = {
 		dest: 'dist/assets/styles',
 		watch: 'src/assets/styles/**/*',
 		browsers: ['last 1 version']
-	},
-	images: {
-		src: 'src/assets/images/**/*',
-		dest: 'dist/assets/images',
-		watch: 'src/assets/images/**/*'
 	},
 	dev: gutil.env.dev
 };
@@ -113,17 +107,6 @@ gulp.task('styles', () => {
 });
 
 
-// images
-gulp.task('images', () => {
-	return gulp.src(config.images.src)
-		.pipe(imagemin({
-			progressive: true,
-			interlaced: true
-		}))
-		.pipe(gulp.dest(config.images.dest));
-});
-
-
 // server
 gulp.task('serve', () => {
 
@@ -135,7 +118,6 @@ gulp.task('serve', () => {
 		logPrefix: 'BrowserSync'
 	});
 
-
 	gulp.task('templates:watch', ['templates'], reload);
 	gulp.watch(config.templates.watch, ['templates:watch']);
 
@@ -144,9 +126,6 @@ gulp.task('serve', () => {
 
 	gulp.task('scripts:watch', ['scripts'], reload);
 	gulp.watch(config.scripts.watch, ['scripts:watch']);
-
-	gulp.task('images:watch', ['images'], reload);
-	gulp.watch(config.images.watch, ['images:watch']);
 
 });
 
@@ -159,7 +138,6 @@ gulp.task('default', ['clean', 'lint'], () => {
 		'templates',
 		'scripts',
 		'styles',
-		'images'
 	];
 
 	// run build
