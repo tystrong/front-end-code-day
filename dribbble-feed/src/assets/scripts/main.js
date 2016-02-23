@@ -42,4 +42,4 @@ function templateFeed(data) {
 }
 
 // @example pass data from API response to Handlebars template
-console.log(templateFeed({}));
+console.log(templateFeed({ items: [] }));
