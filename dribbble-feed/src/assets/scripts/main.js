@@ -33,7 +33,7 @@ const DOM = {
 function templateFeed(data) {
 
 	// import the template
-	// note: if you update the template, you must recompile (hit save on main.js) to see changes
+	// note: if you update the template file, you must save main.js (to trigger a recompile) to see changes
 	const template = require('../../templates/components/feed');
 
 	// template using data; return a string of HTML
@@ -41,5 +41,10 @@ function templateFeed(data) {
 
 }
 
+// TODO add event handler to button
+// TODO make an API call to Dribble
+// TODO pass data to template
+
 // @example pass data from API response to Handlebars template
+// TODO remove this example
 console.log(templateFeed({ items: [] }));
