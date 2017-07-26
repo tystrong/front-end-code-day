@@ -2,11 +2,12 @@
  * Dynamit Code Day Dribbble Feed
  * @author ?
  */
+import feedTemplate from './templates/feed';
 
-// Dribbble API info
+// Dribbble API endpoint
 const API_ENDPOINT = 'https://api.dribbble.com/v1/shots/';
 
-// API token provided in-person
+// TODO API token provided in-person
 const API_TOKEN = '';
 
 // DOM nodes
@@ -26,25 +27,22 @@ const DOM = {
 
 /**
  * Return a templated feed.
- * Handlebars is already included (via webpack handlebars-loader); just pass data through.
- * @param {object} data Context for template
+ * The `feed` module is function that returns a template literal.
+ * @param  {array}  data Context for template
  * @return {string} Templated HTML
  */
-function templateFeed(data) {
-
-	// import the template
-	// note: if you update the template file, you must save main.js (to trigger a recompile) to see changes
-	const template = require('../../templates/components/feed');
-
+function buildFeed(data) {
 	// template using data; return a string of HTML
-	return template(data);
-
+	return feedTemplate(data);
 }
+
 
 // TODO add event handler to button
 // TODO make an API call to Dribble
 // TODO pass data to template
 
+
 // @example pass data from API response to Handlebars template
 // TODO remove this example
-console.log(templateFeed({ items: [] }));
+console.log(buildFeed([]));
+

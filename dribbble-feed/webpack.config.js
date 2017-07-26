@@ -38,10 +38,6 @@ function getLoaders(isDev) {
 
 	const loaders = [
 		{
-			test: /\.html$/,
-			loader: 'handlebars-loader'
-		},
-		{
 			test: /\.js$/,
 			include: path.join(__dirname, 'src'),
 			loaders: ['babel']
@@ -66,7 +62,7 @@ module.exports = function (config) {
 			filename: '[name].js'
 		},
 		resolve: {
-			extensions: ['', '.js', '.jsx', '.html']
+			extensions: ['', '.js', '.jsx']
 		},
 		devtool: '#inline-source-map',
 		module: {
