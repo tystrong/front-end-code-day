@@ -26,6 +26,10 @@ This project was scaffolded using Dynamit's [front-end boilerplate](https://gith
 Start the local development environment:
 
 ```
+$ yarn start
+
+or 
+
 $ npm start
 ```
 

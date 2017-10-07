@@ -1,150 +1,117 @@
-import assemble from 'fabricator-assemble';
-import autoprefixer from 'gulp-autoprefixer';
+import babelify   from 'babelify';
+import browserify from 'browserify';
+import buffer    from 'vinyl-buffer';
+import del      from 'del';
+import gulp      from 'gulp';
+import gulpif    from 'gulp-if';
+import source    from 'vinyl-source-stream';
+import uglify    from 'gulp-uglify';
+import util      from 'gulp-util';
+import sass      from 'gulp-sass';
 import browserSync from 'browser-sync';
-import cssnano from 'gulp-cssnano';
-import del from 'del';
-import eslint from 'gulp-eslint';
-import gulp from 'gulp';
-import gulpif from 'gulp-if';
-import gutil from 'gulp-util';
-import path from 'path';
-import runSequence from 'run-sequence';
-import sass from 'gulp-sass';
-import sourcemaps from 'gulp-sourcemaps';
-import webpack from 'webpack';
+import autoprefixer from 'gulp-autoprefixer';
 
 const reload = browserSync.reload;
 
-
-// configuration
 const config = {
-	templates: {
-		src: ['src/templates/**/*', '!src/templates/+(layouts|components)/**'],
-		dest: 'dist',
-		watch: ['src/templates/**/*', 'src/data/**/*.json'],
-		layouts: 'src/templates/layouts/*',
-		partials: ['src/templates/components/**/*'],
-		data: 'src/data/**/*.{json,yml}'
-	},
+	filename: 'main',
 	scripts: {
-		src: './src/assets/scripts/main.js',
-		dest: 'dist/assets/scripts',
-		watch: 'src/assets/scripts/**/*'
+		input: ['./src/assets/scripts/main.js'],
+		out: './dist/scripts/',
+		watch: ['./src/**/*.js']
 	},
 	styles: {
-		src: 'src/assets/styles/main.scss',
-		dest: 'dist/assets/styles',
-		watch: 'src/assets/styles/**/*',
-		browsers: ['last 1 version']
+		input: ['./src/assets/styles/main.scss'],
+		out: './dist/styles/',
+		watch: ['./src/**/*.scss']
 	},
-	dev: gutil.env.dev
+	isDev : util.env.dev // Config is dev if the dev flag is passed (gulp --dev)
 };
 
+/**
+ * Deletes the /dist/ folder
+ */
+gulp.task('clean', () => {
+	del(config.scripts.out);
+});
 
-// clean
-gulp.task('clean', del.bind(null, ['dist']));
 
+/**
+ * Builds all of our scripts
+ */
+gulp.task('scripts', () => {
+	// console.log(CONFIG)
 
-// templates
-gulp.task('templates', (done) => {
-	assemble({
-		layouts: config.templates.layouts,
-		views: config.templates.src,
-		materials: config.templates.partials,
-		data: config.templates.data,
-		keys: {
-			views: 'templates',
-			materials: 'components'
-		},
-		dest: config.templates.dest,
-		logErrors: config.dev,
-		helpers: {}
+	const entries = config.scripts.input;
+
+	entries.map( (entry) => {
+		// Browserfy Object
+		const bundler = browserify({
+			entries: entry,
+			debug: config.isDev
+		});
+
+		// Transform through Babel
+		bundler.transform( 'babelify', {
+			presets: ['es2015']
+		});
+
+		return bundler.bundle().on('error', (err) => {
+			console.error(err);
+			this.emit('end');
+		})
+		// Convert Stream to buffer
+		.pipe(source(config.filename + '.js'))
+		.pipe(buffer())
+		// if not dev, uglify the code
+		.pipe(gulpif(!config.isDev, uglify()))
+		.pipe(gulp.dest(config.scripts.out))
+		.pipe(reload({stream:true}));
 	});
-	done();
 });
 
-
-// scripts
-const webpackConfig = require('./webpack.config')(config);
-
-gulp.task('scripts', (done) => {
-	webpack(webpackConfig, (error, stats) => {
-		if (error) {
-			gutil.log(gutil.colors.red(error));
-		}
-		const statsObj = stats.toJson();
-		if (statsObj.errors.length) {
-			statsObj.errors.forEach((err) => {
-				gutil.log(gutil.colors.red(err));
-			});
-		}
-		done();
-	});
+// Sass task, will run when any SCSS files change & BrowserSync
+// will auto-update browsers
+gulp.task('sass', () => {
+	return gulp.src(config.styles.input)
+    .pipe(sass({
+    	outputStyle: 'compressed',
+    	errLogToConsole: true
+    }).on('error', sass.logError))
+   	.pipe(autoprefixer())
+    .pipe(gulp.dest(config.styles.out))
+    .pipe(reload({stream:true}));
 });
 
-gulp.task('lint', (done) => {
-	return gulp.src(config.scripts.watch)
-		.pipe(eslint())
-		.pipe(eslint.format())
-		.pipe(gulpif(!config.dev, eslint.failAfterError()));
+/**
+ * Our Default task gets executed when calling gulp.
+ */
+gulp.task('default', ['clean'], () => {
+	gulp.start('watch');
 });
 
-
-// styles
-gulp.task('styles', () => {
-	return gulp.src(config.styles.src)
-		.pipe(sourcemaps.init())
-		.pipe(sass({
-			includePaths: './node_modules'
-		}).on('error', sass.logError))
-		.pipe(autoprefixer({
-			browsers: config.styles.browsers
-		}))
-		.pipe(gulpif(!config.dev, cssnano()))
-		.pipe(sourcemaps.write())
-		.pipe(gulp.dest(config.styles.dest))
-		.pipe(gulpif(config.dev, reload({ stream: true })));
-});
-
-
-// server
-gulp.task('serve', () => {
-
-	browserSync({
-		server: {
-			baseDir: config.templates.dest
-		},
-		notify: false,
-		logPrefix: 'BrowserSync'
-	});
-
-	gulp.task('templates:watch', ['templates'], reload);
-	gulp.watch(config.templates.watch, ['templates:watch']);
-
-	gulp.task('styles:watch', ['styles']);
-	gulp.watch(config.styles.watch, ['styles:watch']);
-
-	gulp.task('scripts:watch', ['scripts'], reload);
-	gulp.watch(config.scripts.watch, ['scripts:watch']);
-
-});
-
-
-// default build task
-gulp.task('default', ['clean', 'lint'], () => {
-
-	// define build tasks
-	const tasks = [
-		'templates',
-		'scripts',
-		'styles',
+/**
+ *  This sets up the server
+ */
+gulp.task('browser-sync', () => {
+	//watch files
+	const files = [
+		'./src/**/*',
+		'./*.html'
 	];
 
-	// run build
-	runSequence(tasks, () => {
-		if (config.dev) {
-			gulp.start('serve');
-		}
-	});
+	//initialize browsersync
+	browserSync.init(files,{
+      server: {
+          baseDir: "./"
+      }
+  });
+});
 
+/**
+ * Watches for changes and calls the correct task
+ */
+gulp.task('watch', ['scripts', 'sass', 'browser-sync'], () => {
+	gulp.watch(config.scripts.watch, ['scripts']);
+	gulp.watch('src/**/*.scss', ['sass']);
 });
