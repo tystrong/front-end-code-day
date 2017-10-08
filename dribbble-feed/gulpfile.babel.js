@@ -38,7 +38,9 @@ const config = {
  * Deletes the /dist/ folder
  */
 gulp.task('clean', () => {
-	del(config.scripts.out);
+	del.sync(config.scripts.out);
+	del.sync(config.styles.out);
+	del.sync(config.images.out);
 });
 
 
