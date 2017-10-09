@@ -6,9 +6,9 @@
 
 This is a [Dynamit](http://dynamit.com) Code Day challenge. Job candidates are provided this code and a set of requirements (in-person). They have **1h** to bring this code to completion, and then present their work to a group of their future colleagues.
 
-Savvy candidates will download and experiment with this project prior to arriving at Dynamit. They'll have an opportunity to ask questions and to get pointed in the right direction if something is unclear.
+Candidates will have an opportunity to ask questions and to get pointed in the right direction if something is unclear.
 
-This exercise in evaluating a candidate's ability to:
+This is an exercise in evaluating a candidate's ability to:
 
 - Read and fulfill functional requirements
 - Consume APIs
@@ -16,10 +16,6 @@ This exercise in evaluating a candidate's ability to:
 - Work with modern tooling (Gulp, Webpack, Sass)
 - Jump into someone else's code
 - Polish a design
-
-## Usage
-
-This project was scaffolded using Dynamit's [front-end boilerplate](https://github.com/dynamit/front-end-boilerplate).
 
 ### Local development
 
@@ -33,10 +29,16 @@ or
 $ npm start
 ```
 
-### Build for distribution
+### Our Process
 
-Generate an optimized build:
+This basic setup is similar to a starting point we would have for our day-to-day project work. In our projects, we leverage the following:
 
-```
-$ npm run build
-```
+* Sass
+* [BEM Methodology](http://getbem.com/introduction/)
+* ES6
+* HTML5
+* Accessibility Best Practices
+
+Do your best to work within these, but don't let it limit achieving the goal. 
+
+![mockup](mockup-state-2.png)
