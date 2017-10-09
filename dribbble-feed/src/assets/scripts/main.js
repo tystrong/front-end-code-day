@@ -2,11 +2,12 @@
  * Dynamit Code Day Dribbble Feed
  * @author ?
  */
+import feedTemplate from './templates/feed';
 
-// Dribbble API info
+// Dribbble API endpoint
 const API_ENDPOINT = 'https://api.dribbble.com/v1/shots/';
 
-// API token provided in-person
+// TODO API token provided in-person
 const API_TOKEN = '';
 
 console.log('We Dribbblin\'');
