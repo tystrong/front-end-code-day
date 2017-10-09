@@ -25,6 +25,12 @@ const config = {
 		out: './dist/styles/',
 		watch: ['./src/**/*.scss']
 	},
+	images: {
+		input: './src/assets/images/**/*',
+		out: './dist/images/',
+		watch: './src/assets/images/**/*'
+	},
+
 	isDev : util.env.dev // Config is dev if the dev flag is passed (gulp --dev)
 };
 
@@ -32,7 +38,9 @@ const config = {
  * Deletes the /dist/ folder
  */
 gulp.task('clean', () => {
-	del(config.scripts.out);
+	del.sync(config.scripts.out);
+	del.sync(config.styles.out);
+	del.sync(config.images.out);
 });
 
 
@@ -83,6 +91,13 @@ gulp.task('sass', () => {
     .pipe(reload({stream:true}));
 });
 
+// copys over images to dist
+gulp.task('images', (done) => {
+	return gulp.src(config.images.input)
+		.pipe(gulp.dest(config.images.out))
+		.pipe(gulpif(config.dev, reload({ stream: true })));
+});
+
 /**
  * Our Default task gets executed when calling gulp.
  */
@@ -111,7 +126,8 @@ gulp.task('browser-sync', () => {
 /**
  * Watches for changes and calls the correct task
  */
-gulp.task('watch', ['scripts', 'sass', 'browser-sync'], () => {
+gulp.task('watch', ['scripts', 'sass', 'images', 'browser-sync'], () => {
 	gulp.watch(config.scripts.watch, ['scripts']);
 	gulp.watch('src/**/*.scss', ['sass']);
+	gulp.watch('src/assets/images/**/*', ['images']);
 });
