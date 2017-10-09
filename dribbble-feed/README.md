@@ -14,8 +14,7 @@ This is an exercise in evaluating a candidate's ability to:
 - Consume APIs
 - Write event-driven JavaScript
 - Work with modern tooling (Gulp, Webpack, Sass)
-- Jump into someone else's code
-- Polish a design
+- Create a simple grid system
 
 ### Local development
 
@@ -38,6 +37,7 @@ This basic setup is similar to a starting point we would have for our day-to-day
 * ES6
 * HTML5
 * Accessibility Best Practices
+* Mobile-first Responsive Design
 
 Do your best to work within these, but don't let it limit achieving the goal. 
 
