@@ -6,7 +6,7 @@ At [Dynamit](http://dynamit.com), everyone goes through "Code Day" challenges as
 
 1. [Hot Dog! It's A Website](/hotdog)
 2. [Punk API](/punk-api)
-3. [Dribbble Feed](/dribbble-feed) [Dribbble API now requires token]
+3. ~~[Dribbble Feed](/dribbble-feed) [Dribbble API now requires token]~~
 
 ## Working at Dynamit
 
