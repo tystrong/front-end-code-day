@@ -1,17 +1,3 @@
-# Front-end Code Day Challenges
+# Hotdog Code Challenge Completed by Ty Strong (tystrong25@gmail.com
 
-At [Dynamit](http://dynamit.com), everyone goes through "Code Day" challenges as part of the hiring process. These are the challenges for front-end developer candidates.
-
-## The Challenges
-
-1. [Hot Dog! It's A Website](/hotdog)
-2. [Punk API](/punk-api)
-3. ~~[Dribbble Feed](/dribbble-feed) [Dribbble API now requires token]~~
-
-## Working at Dynamit
-
-Dynamit creates web and mobile applications. We serve our clients as strategists, creatives, and engineers.
-
-Together, we blend the best of both marketing and IT to help our clients tackle some of their toughest business challenges. Where we really shine is in situations where simple, graceful web and mobile experiences can make a big difference in the way our clients do business
-
-Interest in working here? Check out our [careers page](http://dynamit.com/careers/).
+You can check out a live version at [w9c.co/hotdogs/](http://w9c.co/hotdogs).
